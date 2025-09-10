@@ -13,5 +13,4 @@ danceform/src/main/java/com/example/danceForm/DanceFormApplication.java
 
 ## Report
 In aggiunta al codice sorgente, è presente una cartella report che contiene il report dei test generato da IntelliJ IDEA in formato HTML. 
-Puoi visualizzarlo aprendo il seguente file: 
 danceform/report/index.html
