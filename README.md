@@ -5,7 +5,7 @@
 Questo repository contiene il progetto **DanceForm**, un'applicazione web sviluppata in **Java** utilizzando **IntelliJ IDEA** come ambiente di sviluppo. 
 
 ## Struttura del progetto
-La cartella del progetto contiene tutto il **codice sorgente** dell'applicazione, inclusi i file Java e le configurazioni necessarie per eseguire il progetto.
+La cartella del progetto contiene tutto il codice sorgente dell'applicazione, inclusi i file Java e le configurazioni necessarie per eseguire il progetto.
 
 ## Come eseguire l'applicazione
 Per eseguire l'applicazione web, è sufficiente avviare il seguente file:
