@@ -1,0 +1,56 @@
+/* Sfondo gradiente per tutta la pagina */
+.view-background {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #fd46a8, #fba565); /* fucsia → arancione */
+}
+
+.auth-container {
+    max-width: 400px;
+    margin: auto;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px #f8139c;
+    text-align: center;
+    align-items: center;
+}
+
+/* Logo in alto, dimensioni responsive */
+.logo-img {
+    width: 20%;
+    max-width: 150px;
+    min-width: 80px;
+    margin-bottom: 10px;
+}
+
+.auth1-title {
+    color: #f8139c;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+}
+
+.auth2-title {
+    color: #ff8021;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.auth1-button {
+    background-color: #f8139c;
+    color: white;
+}
+
+.auth2-button {
+    border: 2px solid #ff8021;
+    background: white;
+    color: #ff8021;
+}
+
+.auth2-button:hover {
+    background-color: #ff8021;
+    color: white;
+}

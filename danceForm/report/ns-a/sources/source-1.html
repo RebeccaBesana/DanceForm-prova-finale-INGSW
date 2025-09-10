@@ -1,0 +1,288 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CreaCoreografiaView</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.danceForm.View</a>
+</div>
+
+<h1>Coverage Summary for Class: CreaCoreografiaView (com.example.danceForm.View)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CreaCoreografiaView</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83,3%
+  </span>
+  <span class="absValue">
+    (5/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (66/66)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.danceForm.View;
+&nbsp;
+&nbsp;import com.example.danceForm.Model.Observer.Coreografia;
+&nbsp;import com.vaadin.flow.component.UI;
+&nbsp;import com.vaadin.flow.component.button.Button;
+&nbsp;import com.vaadin.flow.component.dependency.CssImport;
+&nbsp;import com.vaadin.flow.component.html.Div;
+&nbsp;import com.vaadin.flow.component.html.Image;
+&nbsp;import com.vaadin.flow.component.html.Span;
+&nbsp;import com.vaadin.flow.component.notification.Notification;
+&nbsp;import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+&nbsp;import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+&nbsp;import com.vaadin.flow.component.textfield.TextField;
+&nbsp;import com.vaadin.flow.component.textfield.IntegerField;
+&nbsp;import com.vaadin.flow.router.PageTitle;
+&nbsp;import com.vaadin.flow.router.Route;
+&nbsp;import com.vaadin.flow.router.RouteConfiguration;
+&nbsp;import com.example.danceForm.Controller.CoreografiaController;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;/**
+&nbsp; * Vista per creare una nuova coreografia.
+&nbsp; * L&#39;utente inserisce il nome, il numero di ballerini e i nomi per ciascun ballerino.
+&nbsp; */
+&nbsp;
+&nbsp;@Route(&quot;crea-coreografia&quot;)
+&nbsp;@PageTitle(&quot;DanceForm - Crea Coreografia&quot;)
+&nbsp;@CssImport(&quot;./styles/home.css&quot;)
+&nbsp;
+&nbsp;public class CreaCoreografiaView extends ProtectedView {
+&nbsp;
+&nbsp;    private final CoreografiaController coreografiaController;
+&nbsp;
+<b class="fc">&nbsp;    private final TextField nomeCoreografiaField = new TextField(&quot;Nome coreografia&quot;);</b>
+<b class="fc">&nbsp;    private final IntegerField numeroBalleriniField = new IntegerField(&quot;Numero ballerini&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;    private final VerticalLayout balleriniLayout = new VerticalLayout();</b>
+&nbsp;
+<b class="fc">&nbsp;    private final List&lt;TextField&gt; campiNomiBallerini = new ArrayList&lt;&gt;();</b>
+&nbsp;
+&nbsp;    //messaggi
+<b class="fc">&nbsp;    private Span messageLabel = new Span();</b>
+&nbsp;
+&nbsp;    //bottoni
+<b class="fc">&nbsp;    protected Button generaCampiBalleriniButton = new Button(&quot;Inserisci nomi ballerini&quot;);</b>
+<b class="fc">&nbsp;    protected Button salvaButton = new Button(&quot;Salva coreografia&quot;);</b>
+&nbsp;
+&nbsp;    @Autowired
+<b class="fc">&nbsp;    public CreaCoreografiaView(CoreografiaController coreografiaController) {</b>
+<b class="fc">&nbsp;        this.coreografiaController = coreografiaController;</b>
+&nbsp;
+<b class="fc">&nbsp;        setSpacing(true);</b>
+<b class="fc">&nbsp;        setPadding(true);</b>
+&nbsp;
+<b class="fc">&nbsp;        addClassName(&quot;app-background&quot;);</b>
+&nbsp;        // NAVBAR
+<b class="fc">&nbsp;        Image logo = new Image(&quot;/logo.png&quot;, &quot;Logo&quot;);</b>
+<b class="fc">&nbsp;        logo.addClassName(&quot;logo-img&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        Span appName = new Span(&quot;DanceForm&quot;);</b>
+<b class="fc">&nbsp;        Div logoContainer = new Div(logo, appName);</b>
+<b class="fc">&nbsp;        logoContainer.addClassName(&quot;logo-container&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        Span spacer = new Span();</b>
+<b class="fc">&nbsp;        spacer.getStyle().set(&quot;flex-grow&quot;, &quot;1&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        Button tornaHome = new Button(&quot;torna alla Home&quot;);</b>
+<b class="fc">&nbsp;        tornaHome.addClassName(&quot;logout-button&quot;);</b>
+<b class="fc">&nbsp;        tornaHome.addClickListener(e -&gt; {getUI().ifPresent(ui -&gt; ui.navigate(&quot;home&quot;));});</b>
+&nbsp;
+<b class="fc">&nbsp;        HorizontalLayout navbar = new HorizontalLayout(logoContainer,spacer,tornaHome);</b>
+<b class="fc">&nbsp;        navbar.setWidthFull();</b>
+<b class="fc">&nbsp;        navbar.setDefaultVerticalComponentAlignment(Alignment.CENTER);</b>
+<b class="fc">&nbsp;        navbar.addClassName(&quot;navbar&quot;);</b>
+<b class="fc">&nbsp;        add(navbar);</b>
+&nbsp;
+&nbsp;        // Container principale
+<b class="fc">&nbsp;        VerticalLayout container = new VerticalLayout();</b>
+<b class="fc">&nbsp;        container.addClassName(&quot;home-container&quot;);</b>
+<b class="fc">&nbsp;        nomeCoreografiaField.addClassName(&quot;text-field&quot;);</b>
+<b class="fc">&nbsp;        numeroBalleriniField.addClassName(&quot;text-field&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        generaCampiBalleriniButton.addClassName(&quot;secondary-button&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        salvaButton.addClassName(&quot;primary-button&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        balleriniLayout.addClassName(&quot;ballerini-layout&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        container.add(</b>
+&nbsp;                nomeCoreografiaField,
+&nbsp;                numeroBalleriniField,
+&nbsp;                generaCampiBalleriniButton,
+&nbsp;                balleriniLayout,
+&nbsp;                messageLabel,
+&nbsp;                salvaButton
+&nbsp;        );
+&nbsp;
+<b class="fc">&nbsp;        add(container);</b>
+&nbsp;
+<b class="fc">&nbsp;        generaCampiBalleriniButton.addClickListener(e -&gt; generaCampiBallerini());</b>
+<b class="fc">&nbsp;        salvaButton.addClickListener(e -&gt; salvaCoreografia());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Genera dinamicamente i campi di input per i nomi dei ballerini in base al numero inserito.
+&nbsp;    protected void generaCampiBallerini() {
+<b class="fc">&nbsp;        Integer numero = numeroBalleriniField.getValue();</b>
+<b class="pc">&nbsp;        if (numero == null || numero &lt;= 0) {</b>
+<b class="fc">&nbsp;            messageLabel.setText(&quot;⚠️ Inserisci un numero valido di ballerini (maggiore di 0)&quot;);</b>
+&nbsp;            return;
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        balleriniLayout.removeAll();</b>
+<b class="fc">&nbsp;        campiNomiBallerini.clear();</b>
+&nbsp;
+<b class="fc">&nbsp;        for (int i = 1; i &lt;= numero; i++) {</b>
+<b class="fc">&nbsp;            TextField nomeBallerino = new TextField(&quot;Nome ballerino &quot; + i);</b>
+<b class="fc">&nbsp;            nomeBallerino.addClassName(&quot;text-field&quot;);</b>
+<b class="fc">&nbsp;            balleriniLayout.add(nomeBallerino);</b>
+<b class="fc">&nbsp;            campiNomiBallerini.add(nomeBallerino);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // Salva la coreografia
+&nbsp;    private void salvaCoreografia() {
+&nbsp;       try {
+<b class="fc">&nbsp;           String nome = nomeCoreografiaField.getValue();</b>
+<b class="fc">&nbsp;           Integer numero = numeroBalleriniField.getValue();</b>
+<b class="fc">&nbsp;           List&lt;String&gt; nomi = campiNomiBallerini.stream()</b>
+<b class="fc">&nbsp;                   .map(TextField::getValue)</b>
+<b class="fc">&nbsp;                   .toList();</b>
+<b class="fc">&nbsp;           Long coreografoId = (Long) UI.getCurrent().getSession().getAttribute(&quot;coreografoId&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;           Coreografia coreografia = coreografiaController.creaCoreografia(nome, numero, nomi, coreografoId);</b>
+<b class="fc">&nbsp;           coreografiaController.salvaCoreografia(coreografia);</b>
+&nbsp;
+<b class="fc">&nbsp;           Notification.show(&quot;✅ Coreografia creata con successo&quot;);</b>
+&nbsp;           try {
+<b class="fc">&nbsp;               RouteConfiguration.forSessionScope().removeRoute(&quot;crea-coreografia&quot;);</b>
+&nbsp;           } catch (Exception ignored) {
+&nbsp;               // Ignorato nei test o se la sessione non è attiva
+&nbsp;           }
+<b class="fc">&nbsp;           getUI().ifPresent(ui -&gt; ui.navigate(&quot;home&quot;));</b>
+&nbsp;
+&nbsp;       } catch(IllegalArgumentException ex) {
+<b class="fc">&nbsp;            messageLabel.setText(&quot;⚠️ &quot; + ex.getMessage());</b>
+&nbsp;       } catch (IOException ex) {
+<b class="fc">&nbsp;           Notification.show(&quot;❌ Errore durante il salvataggio: &quot; + ex.getMessage());</b>
+&nbsp;       }
+&nbsp;    }
+&nbsp;
+&nbsp;    //getter per test
+&nbsp;
+&nbsp;    public IntegerField getNumeroBalleriniField() {
+<b class="fc">&nbsp;        return numeroBalleriniField;</b>
+&nbsp;    }
+&nbsp;    public VerticalLayout getBalleriniLayout() {
+<b class="fc">&nbsp;        return balleriniLayout;</b>
+&nbsp;    }
+&nbsp;    public Span getMessageLabel() {
+<b class="fc">&nbsp;        return messageLabel;</b>
+&nbsp;    }
+&nbsp;    public TextField getNomeCoreografiaField() {
+<b class="fc">&nbsp;        return nomeCoreografiaField;</b>
+&nbsp;    }
+&nbsp;    public List&lt;TextField&gt; getCampiNomiBallerini() {
+<b class="fc">&nbsp;        return campiNomiBallerini;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-09-07 11:00</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,487 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ModificaCoreografiaView</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.danceForm.View</a>
+</div>
+
+<h1>Coverage Summary for Class: ModificaCoreografiaView (com.example.danceForm.View)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ModificaCoreografiaView</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    72%
+  </span>
+  <span class="absValue">
+    (18/25)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    57,1%
+  </span>
+  <span class="absValue">
+    (24/42)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80,5%
+  </span>
+  <span class="absValue">
+    (165/205)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.danceForm.View;
+&nbsp;
+&nbsp;import com.example.danceForm.Controller.CoreografiaController;
+&nbsp;import com.example.danceForm.Model.*;
+&nbsp;import com.example.danceForm.Dto.BallerinoPoint;
+&nbsp;import com.example.danceForm.Dto.FormazioneViewData;
+&nbsp;import com.example.danceForm.Model.Observer.Coreografia;
+&nbsp;import com.vaadin.flow.component.UI;
+&nbsp;import com.vaadin.flow.component.button.Button;
+&nbsp;import com.vaadin.flow.component.dependency.CssImport;
+&nbsp;import com.vaadin.flow.component.dialog.Dialog;
+&nbsp;import com.vaadin.flow.component.html.Div;
+&nbsp;import com.vaadin.flow.component.html.Span;
+&nbsp;import com.vaadin.flow.component.orderedlayout.*;
+&nbsp;import com.vaadin.flow.component.textfield.TextField;
+&nbsp;import com.vaadin.flow.router.*;
+&nbsp;import com.vaadin.flow.component.notification.Notification;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import java.io.IOException;
+&nbsp;
+&nbsp;@Route(&quot;modifica-coreografia/:id&quot;)
+&nbsp;@PageTitle(&quot;Modifica coreografia&quot;)
+&nbsp;@CssImport(&quot;./styles/coreografia.css&quot;)
+&nbsp;
+&nbsp;public class ModificaCoreografiaView extends ProtectedView implements BeforeEnterObserver {
+&nbsp;    private final CoreografiaController coreografiaController;
+&nbsp;    private Coreografia coreografia;
+<b class="fc">&nbsp;    private int formazioneCorrente = 0;</b>
+&nbsp;
+<b class="fc">&nbsp;    private final Span titoloCoreografia = new Span();</b>
+<b class="fc">&nbsp;    private final Span nomeFormazione = new Span(&quot;Formazione:&quot;);</b>
+<b class="fc">&nbsp;    private final VerticalLayout layoutBallerini = new VerticalLayout();</b>
+<b class="fc">&nbsp;    private final Div palco = new Div();</b>
+<b class="fc">&nbsp;    private final Span noteSpan = new Span();</b>
+<b class="fc">&nbsp;    private final Span minutiSpan = new Span();</b>
+<b class="fc">&nbsp;    private final Button btnPrecedente = new Button(&quot;←&quot;);</b>
+<b class="fc">&nbsp;    private final Button btnSuccessiva = new Button(&quot;→&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;    private Ballerino ballerinoSelezionato = null;</b>
+<b class="fc">&nbsp;    private Span spanSelezionato = null;</b>
+&nbsp;
+&nbsp;    @Autowired
+<b class="fc">&nbsp;    public ModificaCoreografiaView(CoreografiaController coreografiaController) {</b>
+<b class="fc">&nbsp;        this.coreografiaController = coreografiaController;</b>
+&nbsp;
+<b class="fc">&nbsp;        addClassName(&quot;coreo-background&quot;);</b>
+&nbsp;
+&nbsp;        // TOP BAR
+<b class="fc">&nbsp;        Button btnVisualizza = new Button(&quot;Visualizza&quot;);</b>
+<b class="fc">&nbsp;        Button btnBack = new Button(&quot;Torna alla home&quot;);</b>
+<b class="fc">&nbsp;        btnVisualizza.addClassName(&quot;top-button&quot;);</b>
+<b class="fc">&nbsp;        btnBack.addClassName(&quot;top-button&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        btnBack.addClickListener(e -&gt; {salvaModifiche(); UI.getCurrent().navigate(&quot;home&quot;);});</b>
+<b class="fc">&nbsp;        btnVisualizza.addClickListener(e -&gt; {salvaModifiche();</b>
+<b class="nc">&nbsp;            if (coreografia != null) {</b>
+<b class="nc">&nbsp;                UI.getCurrent().navigate(&quot;coreografia/&quot; + coreografia.getId());</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+<b class="fc">&nbsp;        Span spacer = new Span();</b>
+<b class="fc">&nbsp;        spacer.getStyle().set(&quot;flex-grow&quot;, &quot;1&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        titoloCoreografia.addClassName(&quot;text1&quot;);</b>
+<b class="fc">&nbsp;        Span modalita = new Span(&quot; - modalità modifica -&quot;);</b>
+<b class="fc">&nbsp;        modalita.addClassName(&quot;mod-text&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        HorizontalLayout topBar = new HorizontalLayout(titoloCoreografia,modalita, spacer, btnVisualizza, btnBack);</b>
+<b class="fc">&nbsp;        topBar.setWidthFull();</b>
+<b class="fc">&nbsp;        topBar.setPadding(true);</b>
+<b class="fc">&nbsp;        topBar.setDefaultVerticalComponentAlignment(Alignment.CENTER);</b>
+&nbsp;
+&nbsp;
+&nbsp;        // LISTA BALLERINI
+<b class="fc">&nbsp;        Span titoloLista = new Span(&quot;Lista ballerini&quot;);</b>
+<b class="fc">&nbsp;        titoloLista.addClassName(&quot;text3&quot;);</b>
+<b class="fc">&nbsp;        layoutBallerini.setPadding(false);</b>
+<b class="fc">&nbsp;        layoutBallerini.setSpacing(false);</b>
+<b class="fc">&nbsp;        layoutBallerini.setHeightFull();</b>
+<b class="fc">&nbsp;        layoutBallerini.getStyle().set(&quot;overflow-y&quot;, &quot;auto&quot;);</b>
+<b class="fc">&nbsp;        VerticalLayout listaContainer = new VerticalLayout(titoloLista, layoutBallerini);</b>
+<b class="fc">&nbsp;        listaContainer.addClassName(&quot;ballerini-box&quot;);</b>
+&nbsp;
+&nbsp;        //PALCO
+<b class="fc">&nbsp;        nomeFormazione.addClassName(&quot;text2&quot;);</b>
+<b class="fc">&nbsp;        palco.addClassName(&quot;palco&quot;);</b>
+<b class="fc">&nbsp;        palco.getElement().addEventListener(&quot;click&quot;, e -&gt; {</b>
+<b class="nc">&nbsp;            if (ballerinoSelezionato == null) {</b>
+<b class="nc">&nbsp;                Notification.show(&quot;Seleziona un ballerino&quot;);</b>
+&nbsp;                return;
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            int x = (int) e.getEventData().getNumber(&quot;event.offsetX&quot;);</b>
+<b class="nc">&nbsp;            int y = (int) e.getEventData().getNumber(&quot;event.offsetY&quot;);</b>
+&nbsp;            try {
+<b class="nc">&nbsp;                coreografiaController.assignPosizione(coreografia.getId(), formazioneCorrente, ballerinoSelezionato.getId(), x, y);</b>
+&nbsp;                // ricarica dati e ridisegna
+<b class="nc">&nbsp;                coreografia = coreografiaController.getCoreografiaById(coreografia.getId());</b>
+<b class="nc">&nbsp;                mostraFormazioneCorrente();</b>
+&nbsp;            } catch (IOException ex) {
+<b class="nc">&nbsp;                Notification.show(&quot;Errore nel salvataggio posizione&quot;);</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }).addEventData(&quot;event.offsetX&quot;).addEventData(&quot;event.offsetY&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        btnPrecedente.addClassName(&quot;scroll-button&quot;);</b>
+<b class="fc">&nbsp;        btnSuccessiva.addClassName(&quot;scroll-button&quot;);</b>
+<b class="fc">&nbsp;        VerticalLayout palcoConNavigazione = new VerticalLayout(nomeFormazione, palco, new HorizontalLayout(btnPrecedente, btnSuccessiva));</b>
+<b class="fc">&nbsp;        palcoConNavigazione.setAlignItems(Alignment.CENTER);</b>
+&nbsp;
+<b class="fc">&nbsp;        btnPrecedente.addClickListener(e -&gt; cambiaFormazione(-1));</b>
+<b class="fc">&nbsp;        btnSuccessiva.addClickListener(e -&gt; cambiaFormazione(1));</b>
+&nbsp;
+&nbsp;        //Controlli formazione
+<b class="fc">&nbsp;        Button btnAggiungiFormazione = new Button(&quot;Aggiungi formazione&quot;, e -&gt; apriDialogCreaFormazione());</b>
+<b class="fc">&nbsp;        Button btnEliminaFormazione = new Button(&quot;Elimina formazione&quot;, e -&gt; {</b>
+&nbsp;            try {
+<b class="nc">&nbsp;                coreografiaController.removeFormazione(coreografia.getId(), formazioneCorrente);</b>
+<b class="nc">&nbsp;                coreografia = coreografiaController.getCoreografiaById(coreografia.getId());</b>
+<b class="nc">&nbsp;                formazioneCorrente = Math.max(0, Math.min(formazioneCorrente, coreografia.getFormazioni().size() - 1));</b>
+&nbsp;               // caso eliminazione unica formazione
+<b class="nc">&nbsp;                if (coreografia.getFormazioni().isEmpty()) {</b>
+<b class="nc">&nbsp;                    apriDialogCreaFormazione();</b>
+&nbsp;                } else {
+<b class="nc">&nbsp;                    mostraFormazioneCorrente();</b>
+&nbsp;                }
+&nbsp;            } catch (IOException ex) {
+<b class="nc">&nbsp;                Notification.show(&quot;Errore nel salvataggio&quot;);</b>
+&nbsp;            } catch (IllegalArgumentException ex) {
+<b class="nc">&nbsp;                Notification.show(&quot;⚠️ &quot; + ex.getMessage());</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+<b class="fc">&nbsp;        Button btnNota = new Button(&quot;Aggiungi nota&quot;, e -&gt; apriDialogNota());</b>
+<b class="fc">&nbsp;        Button btnMinuti = new Button(&quot;Aggiungi minutaggio&quot;, e -&gt; apriDialogMinutaggio());</b>
+<b class="fc">&nbsp;        btnAggiungiFormazione.addClassName(&quot;modify-button&quot;);</b>
+<b class="fc">&nbsp;        btnEliminaFormazione.addClassName(&quot;modify-button&quot;);</b>
+<b class="fc">&nbsp;        btnNota.addClassName(&quot;modify-button&quot;);</b>
+<b class="fc">&nbsp;        btnMinuti.addClassName(&quot;modify-button&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        VerticalLayout decor = new VerticalLayout(noteSpan, minutiSpan);</b>
+<b class="fc">&nbsp;        decor.addClassName(&quot;note-minutaggio&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        VerticalLayout destra = new VerticalLayout(btnAggiungiFormazione, btnEliminaFormazione, btnNota, btnMinuti,decor);</b>
+<b class="fc">&nbsp;        destra.setAlignItems(Alignment.START);</b>
+<b class="fc">&nbsp;        destra.setDefaultHorizontalComponentAlignment(Alignment.START);</b>
+<b class="fc">&nbsp;        String s=&quot;400px&quot;;</b>
+<b class="fc">&nbsp;        destra.setMaxWidth(s);</b>
+&nbsp;
+<b class="fc">&nbsp;        HorizontalLayout centro = new HorizontalLayout(listaContainer, palcoConNavigazione, destra);</b>
+<b class="fc">&nbsp;        centro.setWidthFull();</b>
+<b class="fc">&nbsp;        centro.setDefaultVerticalComponentAlignment(Alignment.CENTER);</b>
+<b class="fc">&nbsp;        centro.setSpacing(true);</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        add(topBar, centro);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    protected void salvaModifiche(){
+&nbsp;        try {
+<b class="fc">&nbsp;            Long autoreId = (Long) UI.getCurrent().getSession().getAttribute(&quot;coreografoId&quot;);</b>
+<b class="fc">&nbsp;            coreografiaController.saveAndNotifyModified(coreografia,autoreId);</b>
+<b class="fc">&nbsp;            Notification.show(&quot;Modifiche salvate&quot;);</b>
+<b class="fc">&nbsp;            String sessionId = UI.getCurrent().getSession().getSession().getId();</b>
+<b class="fc">&nbsp;            coreografiaController.releaseEditLock(coreografia.getId(), sessionId);</b>
+&nbsp;        } catch (IOException ex) {
+<b class="nc">&nbsp;            Notification.show(&quot;Errore nel salvataggio&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    protected void setupBallerini() {
+<b class="fc">&nbsp;        layoutBallerini.removeAll();</b>
+<b class="fc">&nbsp;        for (Ballerino b : coreografia.getBallerini()) {</b>
+<b class="fc">&nbsp;            Span nome = new Span(b.getNome());</b>
+<b class="fc">&nbsp;            nome.getStyle().set(&quot;margin-left&quot;, &quot;10px&quot;).set(&quot;cursor&quot;, &quot;pointer&quot;);</b>
+<b class="fc">&nbsp;            nome.addClickListener(e -&gt; {</b>
+&nbsp;                // Ripristina stile precedente
+<b class="nc">&nbsp;                if (spanSelezionato != null) {</b>
+<b class="nc">&nbsp;                    spanSelezionato.getStyle().remove(&quot;font-weight&quot;).remove(&quot;text-decoration&quot;);</b>
+&nbsp;                }
+&nbsp;                // Applica stile al selezionato
+<b class="nc">&nbsp;                nome.getStyle().set(&quot;font-weight&quot;, &quot;bold&quot;).set(&quot;text-decoration&quot;, &quot;underline&quot;);</b>
+<b class="nc">&nbsp;                spanSelezionato = nome;</b>
+<b class="nc">&nbsp;                ballerinoSelezionato = b;</b>
+<b class="nc">&nbsp;                Notification.show(&quot;Selezionato: &quot; + b.getNome());</b>
+&nbsp;            });
+<b class="fc">&nbsp;            layoutBallerini.add(nome);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private void mostraFormazioneCorrente() {
+<b class="pc">&nbsp;        if (coreografia.getFormazioni().isEmpty()) return;</b>
+&nbsp;        try {
+<b class="fc">&nbsp;            FormazioneViewData data = coreografiaController.getFormazioneViewData(coreografia.getId(), formazioneCorrente);</b>
+&nbsp;
+<b class="fc">&nbsp;            nomeFormazione.setText(&quot;Formazione: &quot; + data.getNomeFormazione());</b>
+<b class="fc">&nbsp;            palco.removeAll();</b>
+&nbsp;
+<b class="fc">&nbsp;            for (BallerinoPoint punto : data.getPunti()) {</b>
+<b class="fc">&nbsp;                Div pallino = new Div();</b>
+<b class="fc">&nbsp;                pallino.getStyle()</b>
+<b class="fc">&nbsp;                        .set(&quot;position&quot;, &quot;absolute&quot;)</b>
+<b class="fc">&nbsp;                        .set(&quot;left&quot;, punto.getX() + &quot;px&quot;)</b>
+<b class="fc">&nbsp;                        .set(&quot;top&quot;, punto.getY() + &quot;px&quot;)</b>
+<b class="fc">&nbsp;                        .set(&quot;width&quot;, &quot;15px&quot;)</b>
+<b class="fc">&nbsp;                        .set(&quot;height&quot;, &quot;15px&quot;)</b>
+<b class="fc">&nbsp;                        .set(&quot;background-color&quot;, &quot;#f8139c&quot;)</b>
+<b class="fc">&nbsp;                        .set(&quot;border-radius&quot;, &quot;50%&quot;)</b>
+<b class="fc">&nbsp;                        .set(&quot;transform&quot;, &quot;translate(-50%, -50%)&quot;);</b>
+<b class="fc">&nbsp;                Span nome = new Span(punto.getNome());</b>
+<b class="fc">&nbsp;                nome.getStyle()</b>
+<b class="fc">&nbsp;                        .set(&quot;position&quot;, &quot;absolute&quot;)</b>
+<b class="fc">&nbsp;                        .set(&quot;left&quot;, punto.getX() + &quot;px&quot;)</b>
+<b class="fc">&nbsp;                        .set(&quot;top&quot;, (punto.getY() + 15) + &quot;px&quot;)</b>
+<b class="fc">&nbsp;                        .set(&quot;transform&quot;, &quot;translate(-50%, 0)&quot;);</b>
+<b class="fc">&nbsp;                palco.add(pallino, nome);</b>
+&nbsp;            }
+&nbsp;
+<b class="pc">&nbsp;            noteSpan.setText(data.getNota() != null &amp;&amp; !data.getNota().isBlank() ? &quot;📝 Nota: &quot; + data.getNota() : &quot;&quot;);</b>
+<b class="pc">&nbsp;            minutiSpan.setText(data.getMinutaggio() != null &amp;&amp; !data.getMinutaggio().isBlank() ? &quot;⏱ Minutaggio: &quot; + data.getMinutaggio() : &quot;&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;            btnPrecedente.setEnabled(formazioneCorrente &gt; 0);</b>
+<b class="fc">&nbsp;            btnSuccessiva.setEnabled(formazioneCorrente &lt; coreografia.getFormazioni().size() - 1);</b>
+&nbsp;
+&nbsp;        } catch (IOException ex) {
+<b class="fc">&nbsp;            Notification.show(&quot;Errore caricamento formazione&quot;);</b>
+&nbsp;        } catch (IllegalArgumentException ex) {
+<b class="fc">&nbsp;            Notification.show(&quot;⚠️ &quot; + ex.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private void cambiaFormazione(int delta) {
+<b class="fc">&nbsp;        int nuovo = formazioneCorrente + delta;</b>
+<b class="fc">&nbsp;        if (nuovo &gt;= 0 &amp;&amp; nuovo &lt; coreografia.getFormazioni().size()) {</b>
+<b class="fc">&nbsp;            formazioneCorrente = nuovo;</b>
+<b class="fc">&nbsp;            mostraFormazioneCorrente();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    protected void apriDialogCreaFormazione() {
+<b class="fc">&nbsp;        Dialog dialog = new Dialog();</b>
+<b class="fc">&nbsp;        TextField nomeF = new TextField(&quot;Nome formazione&quot;);</b>
+<b class="fc">&nbsp;        nomeF.setWidthFull();</b>
+<b class="fc">&nbsp;        Span messageLabel = new Span();</b>
+<b class="fc">&nbsp;        Button crea = new Button(&quot;Crea&quot;, e -&gt; {</b>
+<b class="nc">&nbsp;            String nome = nomeF.getValue().trim();</b>
+<b class="nc">&nbsp;            if (nome.isEmpty()) {</b>
+<b class="nc">&nbsp;                messageLabel.setText(&quot;Il nome non può essere vuoto&quot;);</b>
+&nbsp;                return;
+&nbsp;            }
+&nbsp;            try {
+<b class="nc">&nbsp;                coreografiaController.creaFormazioneVuota(coreografia.getId(), nome);</b>
+<b class="nc">&nbsp;                coreografia = coreografiaController.getCoreografiaById(coreografia.getId());</b>
+<b class="nc">&nbsp;                mostraFormazioneCorrente();</b>
+&nbsp;                dialog.close();
+&nbsp;            } catch (IOException ex) {
+<b class="nc">&nbsp;                Notification.show(&quot;Errore&quot;);</b>
+&nbsp;            }
+&nbsp;        });
+<b class="fc">&nbsp;        crea.addClassName(&quot;secondary-button&quot;);</b>
+<b class="fc">&nbsp;        Button annullaBtn = new Button(&quot;Annulla&quot;, e -&gt; dialog.close());</b>
+<b class="fc">&nbsp;        annullaBtn.addClassName(&quot;secondary-button&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        dialog.add(nomeF, messageLabel, new HorizontalLayout(crea, annullaBtn));</b>
+<b class="fc">&nbsp;        dialog.open();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    protected void apriDialogNota() {
+<b class="fc">&nbsp;        Dialog dialog = new Dialog();</b>
+<b class="fc">&nbsp;        TextField notaField = new TextField(&quot;Nota&quot;);</b>
+<b class="fc">&nbsp;        notaField.setWidthFull();</b>
+&nbsp;
+&nbsp;        // Prefill dalla DTO (se già presente nota)
+&nbsp;        try {
+<b class="fc">&nbsp;            FormazioneViewData data = coreografiaController.getFormazioneViewData(coreografia.getId(), formazioneCorrente);</b>
+<b class="pc">&nbsp;            if (data.getNota() != null) notaField.setValue(data.getNota());</b>
+&nbsp;        } catch (Exception ignored) {}
+&nbsp;
+<b class="fc">&nbsp;        Button salva = new Button(&quot;Salva&quot;, e -&gt; {</b>
+&nbsp;            try {
+<b class="nc">&nbsp;                coreografiaController.upsertNota(coreografia.getId(), formazioneCorrente, notaField.getValue());</b>
+<b class="nc">&nbsp;                coreografia = coreografiaController.getCoreografiaById(coreografia.getId());</b>
+<b class="nc">&nbsp;                mostraFormazioneCorrente();</b>
+&nbsp;                dialog.close();
+&nbsp;            } catch (IOException ex) {
+<b class="nc">&nbsp;                Notification.show(&quot;Errore salvataggio nota&quot;);</b>
+&nbsp;            }
+&nbsp;        });
+<b class="fc">&nbsp;        salva.addClassName(&quot;secondary-button&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        Button annulla = new Button(&quot;Annulla&quot;, e -&gt; dialog.close());</b>
+<b class="fc">&nbsp;        annulla.addClassName(&quot;secondary-button&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        dialog.add(notaField, new HorizontalLayout(salva, annulla));</b>
+<b class="fc">&nbsp;        dialog.open();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    protected void apriDialogMinutaggio() {
+<b class="fc">&nbsp;        Dialog dialog = new Dialog();</b>
+<b class="fc">&nbsp;        TextField minutiField = new TextField(&quot;Minutaggio (min)&quot;);</b>
+<b class="fc">&nbsp;        minutiField.setWidthFull();</b>
+&nbsp;
+&nbsp;        // Prefill dalla DTO (se già presente minutaggio)
+&nbsp;        try {
+<b class="fc">&nbsp;            FormazioneViewData data = coreografiaController.getFormazioneViewData(coreografia.getId(), formazioneCorrente);</b>
+<b class="pc">&nbsp;            if (data.getMinutaggio() != null) minutiField.setValue(data.getMinutaggio());</b>
+&nbsp;        } catch (Exception ignored) {}
+&nbsp;
+<b class="fc">&nbsp;        Button salva = new Button(&quot;Salva&quot;, e -&gt; {</b>
+&nbsp;            try {
+<b class="nc">&nbsp;                coreografiaController.upsertMinutaggio(coreografia.getId(), formazioneCorrente, minutiField.getValue());</b>
+<b class="nc">&nbsp;                coreografia = coreografiaController.getCoreografiaById(coreografia.getId());</b>
+<b class="nc">&nbsp;                mostraFormazioneCorrente();</b>
+&nbsp;                dialog.close();
+&nbsp;            } catch (IOException ex) {
+<b class="nc">&nbsp;                Notification.show(&quot;Errore salvataggio minutaggio&quot;);</b>
+&nbsp;            }
+&nbsp;        });
+<b class="fc">&nbsp;        salva.addClassName(&quot;secondary-button&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        Button annulla = new Button(&quot;Annulla&quot;, e -&gt; dialog.close());</b>
+<b class="fc">&nbsp;        annulla.addClassName(&quot;secondary-button&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        dialog.add(minutiField, new HorizontalLayout(salva, annulla));</b>
+<b class="fc">&nbsp;        dialog.open();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void beforeEnter(BeforeEnterEvent event) {
+<b class="fc">&nbsp;        String idString = event.getRouteParameters().get(&quot;id&quot;).orElse(null);</b>
+<b class="fc">&nbsp;        if (idString == null) return;</b>
+&nbsp;        try {
+<b class="fc">&nbsp;            Long id = Long.parseLong(idString);</b>
+<b class="fc">&nbsp;            String sessionId = UI.getCurrent().getSession().getSession().getId();</b>
+&nbsp;
+&nbsp;            // Verifica e acquisizione lock tramite access manager
+<b class="fc">&nbsp;            if (!coreografiaController.tryAcquireEditLock(id, sessionId)) {</b>
+<b class="fc">&nbsp;                Notification.show(&quot;⚠️ IMPOSSIBILE MODIFICARE! Coreografia già in modifica da un altro utente&quot;);</b>
+<b class="fc">&nbsp;                event.forwardTo(&quot;home&quot;);</b>
+&nbsp;                return;
+&nbsp;            }
+&nbsp;            // Rilascio lock alla chiusura della sessione o navigazione
+<b class="fc">&nbsp;            UI.getCurrent().addDetachListener(e -&gt; coreografiaController.releaseEditLock(id, sessionId));</b>
+&nbsp;
+<b class="fc">&nbsp;            coreografia = coreografiaController.getCoreografiaById(id);</b>
+<b class="pc">&nbsp;            if (coreografia != null) {</b>
+<b class="fc">&nbsp;                titoloCoreografia.setText(coreografia.getNome());</b>
+<b class="fc">&nbsp;                setupBallerini();</b>
+<b class="fc">&nbsp;                mostraFormazioneCorrente();</b>
+&nbsp;            }
+&nbsp;
+&nbsp;        } catch (IOException e) {
+<b class="fc">&nbsp;            Notification.show(&quot;Errore caricamento coreografia&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // getter per test
+<b class="fc">&nbsp;    public Span getTitoloCoreografiaSpan() { return titoloCoreografia; }</b>
+<b class="fc">&nbsp;    public Span getNomeFormazioneSpan() { return nomeFormazione; }</b>
+<b class="fc">&nbsp;    public Span getNoteSpan() { return noteSpan; }</b>
+<b class="fc">&nbsp;    public Span getMinutiSpan() { return minutiSpan; }</b>
+<b class="fc">&nbsp;    public Div  getPalcoDiv() { return palco; }</b>
+&nbsp;    public VerticalLayout getLayoutBallerini() {
+<b class="fc">&nbsp;        return layoutBallerini;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public void setCoreografiaForTest(Coreografia c) { this.coreografia = c; }</b>
+&nbsp;
+&nbsp;    // Azioni per cambiare formazione senza dover cliccare i bottoni - per test
+<b class="fc">&nbsp;    public void nextFormation() { cambiaFormazione(1); }</b>
+<b class="fc">&nbsp;    public void prevFormation() { cambiaFormazione(-1); }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-09-07 11:00</div>
+</div>
+</body>
+</html>

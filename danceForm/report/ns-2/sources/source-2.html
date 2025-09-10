@@ -1,0 +1,366 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CoreografiaController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.danceForm.Controller</a>
+</div>
+
+<h1>Coverage Summary for Class: CoreografiaController (com.example.danceForm.Controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CoreografiaController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (21/21)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80,4%
+  </span>
+  <span class="absValue">
+    (45/56)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (102/102)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.danceForm.Controller;
+&nbsp;
+&nbsp;import com.example.danceForm.Model.Decorator.*;
+&nbsp;import com.example.danceForm.Model.Observer.ConcreteObserverCoreografi;
+&nbsp;import com.example.danceForm.Model.Observer.Coreografia;
+&nbsp;import com.example.danceForm.Model.Observer.ObserverCoreografi;
+&nbsp;import com.example.danceForm.Service.CoreografoService;
+&nbsp;import com.example.danceForm.Model.*;
+&nbsp;import com.example.danceForm.Service.CoreografiaService;
+&nbsp;import com.vaadin.flow.component.UI;
+&nbsp;import org.springframework.stereotype.Component;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;import com.example.danceForm.Dto.BallerinoPoint;
+&nbsp;import com.example.danceForm.Dto.FormazioneViewData;
+&nbsp;
+&nbsp;/**
+&nbsp; * Controller per la gestione delle coreografie.
+&nbsp; * Questo controller verrà usato dalle viste Vaadin per coordinare l&#39;interfaccia utente.
+&nbsp; */
+&nbsp;
+&nbsp;@Component
+&nbsp;public class CoreografiaController {
+&nbsp;
+&nbsp;    private final CoreografiaService coreografiaService;
+&nbsp;    private final CoreografoService coreografoService;
+&nbsp;
+<b class="fc">&nbsp;    public CoreografiaController(CoreografiaService coreografiaService, CoreografoService coreografoService) {</b>
+<b class="fc">&nbsp;        this.coreografiaService = coreografiaService;</b>
+<b class="fc">&nbsp;        this.coreografoService= coreografoService;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Coreografia salvaCoreografia(Coreografia coreografia) throws IOException {
+<b class="fc">&nbsp;        return coreografiaService.saveCoreografia(coreografia);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //salva coreografia per Crea nuova coreografia
+&nbsp;    public Coreografia creaCoreografia(String nome, Integer numeroBallerini, List&lt;String&gt; nomi, Long coreografoId) throws IOException {
+<b class="pc">&nbsp;        if (nome == null || nome.isBlank()) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Inserisci un nome per la coreografia.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="pc">&nbsp;        if (numeroBallerini == null || numeroBallerini &lt;= 0) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Numero ballerini non valido.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="pc">&nbsp;        if (nomi == null || nomi.size() != numeroBallerini || nomi.stream().anyMatch(n -&gt; n == null || n.isBlank())) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Inserisci tutti i nomi dei ballerini.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        List&lt;Ballerino&gt; ballerini = nomi.stream()</b>
+<b class="fc">&nbsp;                .map(nomeBallerino -&gt; new Ballerino(nomeBallerino, new Posizione(0, 0)))</b>
+<b class="fc">&nbsp;                .toList();</b>
+&nbsp;
+&nbsp;        // Rendi il proprietario un osservatore di default
+<b class="fc">&nbsp;        Coreografo proprietario = coreografoService.getCoreografoById(coreografoId);</b>
+<b class="fc">&nbsp;        ConcreteObserverCoreografi osservatoreProprietario = new ConcreteObserverCoreografi(proprietario);</b>
+<b class="fc">&nbsp;        Coreografia coreografia = new Coreografia(nome, numeroBallerini, ballerini, new ArrayList&lt;&gt;(), coreografoId, new ArrayList&lt;&gt;());</b>
+<b class="fc">&nbsp;        coreografia.aggiungiOsservatore(osservatoreProprietario);</b>
+&nbsp;
+<b class="fc">&nbsp;        return coreografia;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String eliminaCoreografia(Coreografia coreografia, Long coreografoId) throws IOException {
+&nbsp;        // Controllo se l&#39;utente è l&#39;unico osservatore
+<b class="fc">&nbsp;        if (coreografia.getOsservatori().size() == 1) {</b>
+&nbsp;            // Sono l&#39;unico osservatore → Elimino la coreografia
+<b class="fc">&nbsp;            coreografiaService.deleteCoreografia(coreografia.getId());</b>
+<b class="fc">&nbsp;            return &quot;Coreografia eliminata completamente&quot;;</b>
+&nbsp;        } else {
+&nbsp;            // Ci sono altri osservatori → Rimuovo solo me stesso
+<b class="fc">&nbsp;            rimuoviOsservatore(coreografia.getId(), coreografoId);</b>
+<b class="fc">&nbsp;            return &quot;Rimosso dalla coreografia condivisa&quot;;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public Coreografia getCoreografiaById(Long id) throws IOException {
+<b class="fc">&nbsp;        return coreografiaService.getCoreografiaById(id);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public List&lt;Coreografia&gt; getCoreografiePerUtente(Long coreografoId) throws IOException {
+<b class="fc">&nbsp;        return coreografiaService.getCoreografieVisibili(coreografoId);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Rinomina una coreografia e notifica gli osservatori.
+&nbsp;    public void rinominaCoreografia(Long idCoreografia, String nuovoNome) throws IOException {
+<b class="fc">&nbsp;        Long autoreId = (Long) UI.getCurrent().getSession().getAttribute(&quot;coreografoId&quot;);</b>
+<b class="fc">&nbsp;        coreografiaService.rinominaCoreografia(idCoreografia, nuovoNome, autoreId);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void aggiungiOsservatore(Long idCoreografia, String username) throws IOException {
+<b class="fc">&nbsp;        coreografiaService.aggiungiOsservatore(idCoreografia, username);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void rimuoviOsservatore(Long coreografiaId, Long coreografoId) throws IOException {
+<b class="fc">&nbsp;        coreografiaService.rimuoviOsservatore(coreografiaId, coreografoId);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //metodo che passa le notifiche da mostrare ad homeView
+&nbsp;    public List&lt;Notifica&gt; recuperaNotifiche(Long coreografoId) throws IOException {
+<b class="fc">&nbsp;        List&lt;Coreografia&gt; coreografie = getCoreografiePerUtente(coreografoId);</b>
+<b class="fc">&nbsp;        List&lt;Notifica&gt; notificheDaMostrare = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        for (Coreografia c : coreografie) {</b>
+<b class="fc">&nbsp;            for (ObserverCoreografi obs : c.getOsservatori()) {</b>
+<b class="pc">&nbsp;                if (obs instanceof ConcreteObserverCoreografi observer &amp;&amp;</b>
+<b class="pc">&nbsp;                        observer.getCoreografo().getId().equals(coreografoId)) {</b>
+&nbsp;
+<b class="fc">&nbsp;                    List&lt;Notifica&gt; nonLette = observer.getNotificheNonLette();</b>
+<b class="fc">&nbsp;                    notificheDaMostrare.addAll(nonLette);</b>
+&nbsp;
+<b class="fc">&nbsp;                    observer.segnaTutteComeLette();</b>
+<b class="fc">&nbsp;                    salvaCoreografia(c);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return notificheDaMostrare;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // passaggio tra view e accessManager
+&nbsp;    public boolean isBeingEdited(Long coreografiaId) {
+<b class="fc">&nbsp;        return com.example.danceForm.Util.CoreografiaAccessManager.getInstance().isBeingEdited(coreografiaId);</b>
+&nbsp;    }
+&nbsp;    public boolean tryAcquireEditLock(Long coreografiaId, String sessionId) {
+<b class="fc">&nbsp;        return com.example.danceForm.Util.CoreografiaAccessManager.getInstance().tryAcquire(coreografiaId, sessionId);</b>
+&nbsp;    }
+&nbsp;    public void releaseEditLock(Long coreografiaId, String sessionId) {
+<b class="fc">&nbsp;        com.example.danceForm.Util.CoreografiaAccessManager.getInstance().release(coreografiaId, sessionId);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // recupera una formazione di una coreografia e la trasforma in un DTO
+&nbsp;    // contenente i dati pronti per la visualizzazione nella View.
+&nbsp;
+&nbsp;    public FormazioneViewData getFormazioneViewData(Long coreografiaId, int indice) throws IOException {
+<b class="fc">&nbsp;        Coreografia c = getCoreografiaById(coreografiaId);</b>
+<b class="fc">&nbsp;        validaIndiceFormazione(c, indice);</b>
+&nbsp;
+<b class="fc">&nbsp;        Formazione formazioneDecorata = c.getFormazioni().get(indice);</b>
+&nbsp;
+&nbsp;        // Estrai base + raccogli nota/minutaggio dai decorator
+<b class="fc">&nbsp;        String nota = null;</b>
+<b class="fc">&nbsp;        String minutaggio = null;</b>
+<b class="fc">&nbsp;        Formazione f = formazioneDecorata;</b>
+<b class="fc">&nbsp;        while (f instanceof FormazioneDecorator decorator) {</b>
+<b class="fc">&nbsp;            if (decorator instanceof NotaDecorator decorNote) {</b>
+<b class="fc">&nbsp;                nota = decorNote.getNota();</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (decorator instanceof MinutaggioDecorator decorMin) {</b>
+<b class="fc">&nbsp;                minutaggio = decorMin.getMinutaggio();</b>
+&nbsp;            }
+<b class="fc">&nbsp;            f = decorator.getComponente();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        FormazioneBase base = (FormazioneBase) f;</b>
+&nbsp;
+&nbsp;        // Prepara i punti (nome + x,y) dei ballerini della coreografia
+<b class="fc">&nbsp;        Map&lt;Long, Posizione&gt; posizioni = base.getPosizioniBallerini();</b>
+<b class="fc">&nbsp;        List&lt;BallerinoPoint&gt; punti = new java.util.ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Ballerino b : c.getBallerini()) {</b>
+<b class="fc">&nbsp;            Posizione p = posizioni.get(b.getId());</b>
+<b class="pc">&nbsp;            if (p != null) {</b>
+<b class="fc">&nbsp;                punti.add(new BallerinoPoint(b.getNome(), p.getX(), p.getY()));</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return new FormazioneViewData(formazioneDecorata.getNome(), punti, nota, minutaggio);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Manipolazioni della formazione
+&nbsp;    public void assignPosizione(Long coreografiaId, int indiceFormazione, Long ballerinoId, int x, int y) throws IOException {
+<b class="fc">&nbsp;        Coreografia c = getCoreografiaById(coreografiaId);</b>
+<b class="fc">&nbsp;        validaIndiceFormazione(c, indiceFormazione);</b>
+<b class="fc">&nbsp;        Formazione f = c.getFormazioni().get(indiceFormazione);</b>
+<b class="pc">&nbsp;        while (f instanceof FormazioneDecorator d) { f = d.getComponente(); }</b>
+<b class="fc">&nbsp;        FormazioneBase base = (FormazioneBase) f;</b>
+<b class="fc">&nbsp;        base.assegnaPosizione(ballerinoId, new Posizione(x, y));</b>
+<b class="fc">&nbsp;        salvaCoreografia(c);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void removeFormazione(Long coreografiaId, int indiceFormazione) throws IOException {
+<b class="fc">&nbsp;        Coreografia c = getCoreografiaById(coreografiaId);</b>
+<b class="fc">&nbsp;        validaIndiceFormazione(c, indiceFormazione);</b>
+<b class="fc">&nbsp;        c.getFormazioni().remove(indiceFormazione);</b>
+<b class="fc">&nbsp;        salvaCoreografia(c);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void creaFormazioneVuota(Long coreografiaId, String nomeFormazione) throws IOException {
+<b class="fc">&nbsp;        coreografiaService.creaFormazioneVuota(coreografiaId, nomeFormazione);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //salva nota, se già presente la modifica, altrimenti decora formazione con nota
+&nbsp;    public void upsertNota(Long coreografiaId, int indiceFormazione, String nota) throws IOException {
+<b class="fc">&nbsp;        Coreografia c = getCoreografiaById(coreografiaId);</b>
+<b class="fc">&nbsp;        validaIndiceFormazione(c, indiceFormazione);</b>
+<b class="fc">&nbsp;        Formazione f = c.getFormazioni().get(indiceFormazione);</b>
+&nbsp;
+&nbsp;        // Cerca NotaDecorator
+<b class="fc">&nbsp;        Formazione cursor = f;</b>
+<b class="fc">&nbsp;        while (cursor instanceof FormazioneDecorator d) {</b>
+<b class="fc">&nbsp;            if (d instanceof NotaDecorator nd) {</b>
+<b class="fc">&nbsp;                nd.setNota(nota);</b>
+<b class="fc">&nbsp;                salvaCoreografia(c);</b>
+&nbsp;                return;
+&nbsp;            }
+<b class="fc">&nbsp;            cursor = ((FormazioneDecorator) cursor).getComponente();</b>
+&nbsp;        }
+&nbsp;        // Non esiste → crea wrapper
+<b class="fc">&nbsp;        c.getFormazioni().set(indiceFormazione, new NotaDecorator(f, nota));</b>
+<b class="fc">&nbsp;        salvaCoreografia(c);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //salva minutaggio, se già presente lo modifica, altrimenti decora formazione con minutaggio
+&nbsp;    public void upsertMinutaggio(Long coreografiaId, int indiceFormazione, String minutaggio) throws IOException {
+<b class="fc">&nbsp;        Coreografia c = getCoreografiaById(coreografiaId);</b>
+<b class="fc">&nbsp;        validaIndiceFormazione(c, indiceFormazione);</b>
+<b class="fc">&nbsp;        Formazione f = c.getFormazioni().get(indiceFormazione);</b>
+&nbsp;
+&nbsp;        // Cerca MinutaggioDecorator
+<b class="fc">&nbsp;        Formazione cursor = f;</b>
+<b class="fc">&nbsp;        while (cursor instanceof FormazioneDecorator d) {</b>
+<b class="fc">&nbsp;            if (d instanceof MinutaggioDecorator md) {</b>
+<b class="fc">&nbsp;                md.setMinutaggio(minutaggio);</b>
+<b class="fc">&nbsp;                salvaCoreografia(c);</b>
+&nbsp;                return;
+&nbsp;            }
+<b class="fc">&nbsp;            cursor = ((FormazioneDecorator) cursor).getComponente();</b>
+&nbsp;        }
+&nbsp;        // Non esiste → crea wrapper
+<b class="fc">&nbsp;        c.getFormazioni().set(indiceFormazione, new MinutaggioDecorator(f, minutaggio));</b>
+<b class="fc">&nbsp;        salvaCoreografia(c);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Salva + notifica osservatori per ModificaCoreografiaView
+&nbsp;    public void saveAndNotifyModified(Coreografia coreografia, Long autoreId) throws IOException {
+<b class="fc">&nbsp;        coreografia.notificaOsservatori(&quot;La coreografia &quot; + coreografia.getNome() + &quot; è stata modificata&quot;, autoreId);</b>
+<b class="fc">&nbsp;        salvaCoreografia(coreografia);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Utilità interna
+&nbsp;    private void validaIndiceFormazione(Coreografia c, int indice) {
+<b class="fc">&nbsp;        if (c == null) throw new IllegalArgumentException(&quot;Coreografia non trovata&quot;);</b>
+<b class="pc">&nbsp;        if (c.getFormazioni() == null || c.getFormazioni().isEmpty()) throw new IllegalArgumentException(&quot;Nessuna formazione presente&quot;);</b>
+<b class="pc">&nbsp;        if (indice &lt; 0 || indice &gt;= c.getFormazioni().size()) throw new IllegalArgumentException(&quot;Indice formazione non valido&quot;);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-09-07 11:00</div>
+</div>
+</body>
+</html>

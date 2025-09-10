@@ -1,0 +1,229 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > SigninView</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.danceForm.View</a>
+</div>
+
+<h1>Coverage Summary for Class: SigninView (com.example.danceForm.View)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SigninView</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (40/40)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.danceForm.View;
+&nbsp;
+&nbsp;import com.example.danceForm.Controller.AuthController;
+&nbsp;import com.example.danceForm.Model.Coreografo;
+&nbsp;import com.vaadin.flow.component.button.Button;
+&nbsp;import com.vaadin.flow.component.html.Image;
+&nbsp;import com.vaadin.flow.component.html.Span;
+&nbsp;import com.vaadin.flow.component.notification.Notification;
+&nbsp;import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+&nbsp;import com.vaadin.flow.component.textfield.PasswordField;
+&nbsp;import com.vaadin.flow.component.textfield.TextField;
+&nbsp;import com.vaadin.flow.router.PageTitle;
+&nbsp;import com.vaadin.flow.router.Route;
+&nbsp;import com.vaadin.flow.component.UI;
+&nbsp;import com.vaadin.flow.component.dependency.CssImport;
+&nbsp;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;
+&nbsp;@Route(&quot;signin&quot;)
+&nbsp;@PageTitle(&quot;DanceForm - Registrazione&quot;)
+&nbsp;@CssImport(&quot;./styles/auth.css&quot;)
+&nbsp;
+&nbsp;public class SigninView extends VerticalLayout {
+&nbsp;
+&nbsp;    private final AuthController authController;
+&nbsp;
+&nbsp;    // Campi per registrazione
+<b class="fc">&nbsp;    private final TextField registerUsername = new TextField(&quot;Username&quot;);</b>
+<b class="fc">&nbsp;    private final PasswordField registerPassword = new PasswordField(&quot;Password&quot;);</b>
+&nbsp;
+&nbsp;    // Messaggio dinamico
+<b class="fc">&nbsp;    private final Span messageLabel = new Span();</b>
+&nbsp;
+&nbsp;    //Bottoni
+<b class="fc">&nbsp;    private final Button signinButton = new Button(&quot;Sign in&quot;);</b>
+<b class="fc">&nbsp;    private final Button loginButton = new Button(&quot;Torna al login&quot;);</b>
+&nbsp;
+&nbsp;    @Autowired
+<b class="fc">&nbsp;    public SigninView(AuthController authController) {</b>
+<b class="fc">&nbsp;        this.authController = authController;</b>
+&nbsp;
+<b class="fc">&nbsp;        setSizeFull();</b>
+<b class="fc">&nbsp;        setDefaultHorizontalComponentAlignment(Alignment.CENTER);</b>
+<b class="fc">&nbsp;        setJustifyContentMode(JustifyContentMode.CENTER);</b>
+&nbsp;
+&nbsp;        // Sfondo
+<b class="fc">&nbsp;        addClassName(&quot;view-background&quot;);</b>
+&nbsp;
+&nbsp;        // Titolo + logo
+<b class="fc">&nbsp;        Image logo = new Image(&quot;/logo.png&quot;, &quot;Logo&quot;);</b>
+<b class="fc">&nbsp;        logo.addClassName(&quot;logo-img&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        Span title = new Span(&quot;DanceForm&quot;);</b>
+<b class="fc">&nbsp;        title.addClassName(&quot;auth1-title&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        Span subtitle = new Span(&quot;Benvenuto, crea un nuovo account:&quot;);</b>
+<b class="fc">&nbsp;        subtitle.addClassName(&quot;auth2-title&quot;);</b>
+&nbsp;
+&nbsp;        // Pulsanti
+<b class="fc">&nbsp;        signinButton.addClickListener(e -&gt; registrati());</b>
+<b class="fc">&nbsp;        signinButton.addClassName(&quot;auth1-button&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        loginButton.addClickListener(e -&gt; UI.getCurrent().navigate(&quot;&quot;));</b>
+<b class="fc">&nbsp;        loginButton.addClassName(&quot;auth2-button&quot;);</b>
+&nbsp;
+&nbsp;        // Container
+<b class="fc">&nbsp;        VerticalLayout container = new VerticalLayout(title,subtitle, registerUsername, registerPassword, signinButton, loginButton, messageLabel);</b>
+<b class="fc">&nbsp;        container.addClassName(&quot;auth-container&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        add(logo,container);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void registrati() {
+<b class="fc">&nbsp;        String username = registerUsername.getValue();</b>
+<b class="fc">&nbsp;        String password = registerPassword.getValue();</b>
+&nbsp;
+&nbsp;        // Controlla che i campi non siano vuoti
+<b class="pc">&nbsp;        if (username.isEmpty() || password.isEmpty()) {</b>
+<b class="fc">&nbsp;            messageLabel.setText(&quot;⚠️Completa tutti i campi&quot;);</b>
+&nbsp;            return;
+&nbsp;        }
+&nbsp;
+&nbsp;        try {
+<b class="fc">&nbsp;            Coreografo nuovo = new Coreografo(username, password);</b>
+<b class="fc">&nbsp;            authController.registrazione(nuovo);</b>
+&nbsp;            // Login automatico dopo registrazione
+<b class="fc">&nbsp;            UI.getCurrent().getSession().setAttribute(&quot;username&quot;, username);</b>
+<b class="fc">&nbsp;            UI.getCurrent().navigate(&quot;home&quot;);</b>
+<b class="fc">&nbsp;            Notification.show(&quot;✅ Registrazione completata.&quot;);</b>
+&nbsp;        } catch (IllegalArgumentException e) {
+<b class="fc">&nbsp;            messageLabel.setText(&quot;⚠️ Username già esistente.&quot;);</b>
+&nbsp;        } catch (Exception e) {
+<b class="fc">&nbsp;            Notification.show(&quot;❌ Errore durante la registrazione.&quot; + e.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // getter utili per test
+&nbsp;    public TextField getRegisterUsername() {
+<b class="fc">&nbsp;        return registerUsername;</b>
+&nbsp;    }
+&nbsp;    public PasswordField getRegisterPassword() {
+<b class="fc">&nbsp;        return registerPassword;</b>
+&nbsp;    }
+<b class="fc">&nbsp;    public Span getMessageLabel() { return messageLabel; }</b>
+&nbsp;    public Button getLoginButton(){
+<b class="fc">&nbsp;        return loginButton;</b>
+&nbsp;    }
+&nbsp;    public Button getSigninButton() {
+<b class="fc">&nbsp;        return signinButton;</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-09-07 11:00</div>
+</div>
+</body>
+</html>

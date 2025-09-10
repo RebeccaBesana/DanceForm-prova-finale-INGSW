@@ -1,0 +1,162 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > FormazioneBase</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.danceForm.Model.Decorator</a>
+</div>
+
+<h1>Coverage Summary for Class: FormazioneBase (com.example.danceForm.Model.Decorator)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FormazioneBase</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (13/13)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.danceForm.Model.Decorator;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;import com.example.danceForm.Model.Ballerino;
+&nbsp;import com.example.danceForm.Model.Posizione;
+&nbsp;import com.fasterxml.jackson.annotation.JsonProperty;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;public class FormazioneBase implements Formazione {
+&nbsp;    @JsonProperty(&quot;id&quot;)
+&nbsp;    private Long id;
+&nbsp;
+&nbsp;    @JsonProperty(&quot;nome&quot;)
+&nbsp;    private String nome;
+&nbsp;
+&nbsp;    // Mappa che associa l&#39;id del ballerino alla sua posizione specifica per questa formazione
+<b class="fc">&nbsp;    @JsonProperty(&quot;posizioniBallerini&quot;)</b>
+&nbsp;    private Map&lt;Long, Posizione&gt; posizioniBallerini = new HashMap&lt;&gt;();
+&nbsp;
+&nbsp;    // Costruttori, getter, setter
+<b class="fc">&nbsp;    public FormazioneBase() {}</b>
+<b class="fc">&nbsp;    public FormazioneBase(String nome, List&lt;Ballerino&gt; ballerini) {</b>
+<b class="fc">&nbsp;        this.id = com.example.danceForm.Util.IdManager.nextFormazioneId(); //Assegna ID progressivo</b>
+<b class="fc">&nbsp;        this.nome = nome;</b>
+<b class="fc">&nbsp;        this.posizioniBallerini = new HashMap&lt;&gt;();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Long getId() {
+<b class="fc">&nbsp;        return id;</b>
+&nbsp;    }
+&nbsp;    @Override
+&nbsp;    public void setId (long id) {
+<b class="fc">&nbsp;        this.id = id;</b>
+&nbsp;    }
+&nbsp;    @Override
+&nbsp;    public String getNome() {
+<b class="fc">&nbsp;        return nome;</b>
+&nbsp;    }
+&nbsp;    @Override
+&nbsp;    public void setNome(String nome) {
+<b class="fc">&nbsp;        this.nome = nome;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Map&lt;Long, Posizione&gt; getPosizioniBallerini() {
+<b class="fc">&nbsp;        return posizioniBallerini;</b>
+&nbsp;    }
+&nbsp;    public void assegnaPosizione(Long ballerinoId, Posizione posizione) {
+<b class="fc">&nbsp;           posizioniBallerini.put(ballerinoId, posizione);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void visualizza() {
+<b class="fc">&nbsp;        System.out.println(&quot;Visualizzazione della formazione: &quot; + nome);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-09-07 11:00</div>
+</div>
+</body>
+</html>

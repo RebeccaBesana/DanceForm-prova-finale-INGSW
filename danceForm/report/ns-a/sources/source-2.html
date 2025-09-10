@@ -1,0 +1,377 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > HomeView</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.danceForm.View</a>
+</div>
+
+<h1>Coverage Summary for Class: HomeView (com.example.danceForm.View)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">HomeView</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66,7%
+  </span>
+  <span class="absValue">
+    (8/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (4/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    76,3%
+  </span>
+  <span class="absValue">
+    (90/118)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.danceForm.View;
+&nbsp;
+&nbsp;import com.example.danceForm.Model.*;
+&nbsp;import com.example.danceForm.Model.Observer.Coreografia;
+&nbsp;import com.vaadin.flow.component.UI;
+&nbsp;import com.vaadin.flow.component.dependency.CssImport;
+&nbsp;import com.vaadin.flow.component.dialog.Dialog;
+&nbsp;import com.vaadin.flow.component.html.Div;
+&nbsp;import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+&nbsp;import com.vaadin.flow.component.textfield.TextField;
+&nbsp;import com.vaadin.flow.component.button.Button;
+&nbsp;import com.vaadin.flow.component.grid.Grid;
+&nbsp;import com.vaadin.flow.component.html.Image;
+&nbsp;import com.vaadin.flow.component.html.Span;
+&nbsp;import com.vaadin.flow.component.notification.Notification;
+&nbsp;import com.vaadin.flow.component.icon.VaadinIcon;
+&nbsp;import com.vaadin.flow.component.icon.Icon;
+&nbsp;import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+&nbsp;import com.vaadin.flow.router.Route;
+&nbsp;import com.vaadin.flow.router.PageTitle;
+&nbsp;import com.example.danceForm.Controller.CoreografiaController;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.List;
+&nbsp;import java.util.stream.Stream;
+&nbsp;
+&nbsp;@Route(&quot;home&quot;)
+&nbsp;@PageTitle(&quot;DanceForm - Home&quot;)
+&nbsp;@CssImport(&quot;./styles/home.css&quot;)
+&nbsp;
+&nbsp;public class HomeView extends ProtectedView {
+&nbsp;
+&nbsp;    private final CoreografiaController coreografiaController;
+<b class="fc">&nbsp;    private final Grid&lt;Coreografia&gt; coreografiaGrid = new Grid&lt;&gt;(Coreografia.class);</b>
+&nbsp;
+&nbsp;    //bottoni per test
+<b class="fc">&nbsp;    protected Button nuovaCoreografiaButton = new Button(&quot;Crea nuova coreografia&quot;);</b>
+<b class="fc">&nbsp;    protected Button notificationButton = new Button(new Icon(VaadinIcon.BELL));</b>
+&nbsp;
+&nbsp;    @Autowired
+<b class="fc">&nbsp;    public HomeView(CoreografiaController coreografiaController) {</b>
+<b class="fc">&nbsp;        this.coreografiaController = coreografiaController;</b>
+&nbsp;
+<b class="fc">&nbsp;        setSizeFull();</b>
+<b class="fc">&nbsp;        setPadding(true);</b>
+<b class="fc">&nbsp;        setSpacing(true);</b>
+&nbsp;
+<b class="fc">&nbsp;        coreografiaGrid.setColumns(&quot;id&quot;, &quot;nome&quot;);</b>
+<b class="fc">&nbsp;        coreografiaGrid.setSelectionMode(Grid.SelectionMode.SINGLE);</b>
+&nbsp;
+<b class="fc">&nbsp;        addClassName(&quot;app-background&quot;);</b>
+&nbsp;
+&nbsp;        // NAVBAR
+<b class="fc">&nbsp;        Image logo = new Image(&quot;/logo.png&quot;, &quot;Logo&quot;);</b>
+<b class="fc">&nbsp;        logo.addClassName(&quot;logo-img&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        Span appName = new Span(&quot;DanceForm&quot;);</b>
+<b class="fc">&nbsp;        Div logoContainer = new Div(logo, appName);</b>
+<b class="fc">&nbsp;        logoContainer.addClassName(&quot;logo-container&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        Button logoutButton = new Button(&quot;Logout&quot;);</b>
+<b class="fc">&nbsp;        logoutButton.addClickListener(e -&gt; UI.getCurrent().navigate(&quot;logout&quot;));</b>
+<b class="fc">&nbsp;        logoutButton.addClassName(&quot;logout-button&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        notificationButton.addClassName(&quot;notification-button&quot;);</b>
+<b class="fc">&nbsp;        Dialog notificationDialog = new Dialog();</b>
+<b class="fc">&nbsp;        notificationDialog.setCloseOnOutsideClick(true);</b>
+<b class="fc">&nbsp;        notificationDialog.setHeaderTitle(&quot;Notifiche&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        VerticalLayout notificationContent = new VerticalLayout();</b>
+<b class="fc">&nbsp;        notificationContent.setSpacing(false);</b>
+<b class="fc">&nbsp;        notificationContent.setPadding(false);</b>
+<b class="fc">&nbsp;        notificationDialog.add(notificationContent);</b>
+&nbsp;
+<b class="fc">&nbsp;        notificationButton.addClickListener(e -&gt; {</b>
+&nbsp;            try {
+<b class="nc">&nbsp;                mostraNotifiche(notificationContent);</b>
+<b class="nc">&nbsp;                notificationDialog.open();</b>
+&nbsp;            } catch (IOException ex) {
+<b class="nc">&nbsp;                Notification.show(&quot;Errore caricamento notifiche&quot;);</b>
+<b class="nc">&nbsp;                ex.printStackTrace();</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+<b class="fc">&nbsp;        Span spacer = new Span();</b>
+<b class="fc">&nbsp;        spacer.getStyle().set(&quot;flex-grow&quot;, &quot;1&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        HorizontalLayout navbar = new HorizontalLayout(logoContainer, spacer, notificationButton, logoutButton);</b>
+<b class="fc">&nbsp;        navbar.setWidthFull();</b>
+<b class="fc">&nbsp;        navbar.setPadding(true);</b>
+<b class="fc">&nbsp;        navbar.setDefaultVerticalComponentAlignment(Alignment.CENTER);</b>
+<b class="fc">&nbsp;        navbar.addClassName(&quot;navbar&quot;);</b>
+<b class="fc">&nbsp;        add(navbar);</b>
+&nbsp;
+&nbsp;        // Container principale
+<b class="fc">&nbsp;        VerticalLayout container = new VerticalLayout();</b>
+<b class="fc">&nbsp;        container.addClassName(&quot;home-container&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        String coreografoNome = (String) UI.getCurrent().getSession().getAttribute(&quot;username&quot;);</b>
+<b class="fc">&nbsp;        Span title = new Span(&quot;Benvenuto nella tua Home - &quot;+coreografoNome);</b>
+<b class="fc">&nbsp;        title.addClassName(&quot;welcome-title&quot;);</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        nuovaCoreografiaButton.addClickListener(e -&gt; creaNuovaCoreografia());</b>
+<b class="fc">&nbsp;        nuovaCoreografiaButton.addClassName(&quot;primary-button&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        container.add(title, nuovaCoreografiaButton);</b>
+&nbsp;
+&nbsp;        // Griglia + AZIONI DENTRO LA GRID
+<b class="fc">&nbsp;        coreografiaGrid.addComponentColumn(coreografia -&gt; {</b>
+<b class="nc">&nbsp;            HorizontalLayout layout = new HorizontalLayout();</b>
+<b class="nc">&nbsp;            layout.addClassName(&quot;grid-action-buttons&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;            Button visualizza = new Button(&quot;visualizza&quot;, e -&gt; getUI().ifPresent(ui -&gt; ui.navigate(&quot;coreografia/&quot; + coreografia.getId())));</b>
+<b class="nc">&nbsp;            Button rinomina = new Button(&quot;rinomina️&quot;, e -&gt; apriDialogRinomina(coreografia));</b>
+<b class="nc">&nbsp;            Button elimina = new Button(&quot;elimina&quot;, e -&gt; eliminaCoreografia(coreografia));</b>
+<b class="nc">&nbsp;            Button condividi = new Button(&quot;condividi&quot;, e -&gt; apriDialogCondivisione(coreografia));</b>
+&nbsp;
+<b class="nc">&nbsp;            Stream.of(visualizza, rinomina, elimina, condividi).forEach(btn -&gt; btn.addClassName(&quot;secondary-button&quot;));</b>
+<b class="nc">&nbsp;            layout.add(visualizza, rinomina, elimina, condividi);</b>
+<b class="nc">&nbsp;            return layout;</b>
+<b class="fc">&nbsp;        }).setHeader(&quot;Azioni&quot;).setAutoWidth(true).setFlexGrow(0);</b>
+&nbsp;
+<b class="fc">&nbsp;        container.add(coreografiaGrid);</b>
+<b class="fc">&nbsp;        add(container);</b>
+&nbsp;
+&nbsp;        // Caricamento iniziale
+&nbsp;        try {
+<b class="fc">&nbsp;            aggiornaElencoCoreografie();</b>
+&nbsp;        } catch (IOException ex) {
+<b class="nc">&nbsp;            ex.printStackTrace();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    //Carica tutte le coreografie dalla repository e aggiorna la griglia.
+&nbsp;    protected void aggiornaElencoCoreografie() throws IOException {
+<b class="fc">&nbsp;        Long coreografoId = (Long) UI.getCurrent().getSession().getAttribute(&quot;coreografoId&quot;);</b>
+<b class="fc">&nbsp;        List&lt;Coreografia&gt; coreografie = coreografiaController.getCoreografiePerUtente(coreografoId);</b>
+<b class="fc">&nbsp;        coreografiaGrid.setItems(coreografie);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Naviga alla pagina di creazione coreografia.
+&nbsp;    private void creaNuovaCoreografia() {
+<b class="fc">&nbsp;        UI.getCurrent().navigate(&quot;crea-coreografia&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Helper
+&nbsp;    protected void eliminaCoreografia(Coreografia coreografia) {
+&nbsp;        try {
+<b class="fc">&nbsp;            Long CoreografoID = (Long) UI.getCurrent().getSession().getAttribute(&quot;coreografoId&quot;);</b>
+<b class="fc">&nbsp;            Notification.show(coreografiaController.eliminaCoreografia(coreografia, CoreografoID));</b>
+<b class="fc">&nbsp;            aggiornaElencoCoreografie();</b>
+&nbsp;        } catch (IOException ex) {
+<b class="fc">&nbsp;            Notification.show(&quot;Errore eliminazione: &quot; + ex.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    protected void apriDialogRinomina(Coreografia coreografia) {
+<b class="fc">&nbsp;        Dialog dialog = new Dialog();</b>
+&nbsp;
+&nbsp;        //inserire nuovo nome coreografia
+<b class="fc">&nbsp;        TextField nuovoNomeField = new TextField(&quot;Nuovo nome&quot;);</b>
+<b class="fc">&nbsp;        nuovoNomeField.setValue(coreografia.getNome());</b>
+<b class="fc">&nbsp;        nuovoNomeField.setWidthFull();</b>
+&nbsp;
+&nbsp;        //messaggi
+<b class="fc">&nbsp;        Span messageLabel = new Span();</b>
+&nbsp;
+<b class="fc">&nbsp;        Button salvaBtn = new Button(&quot;Salva&quot;, event -&gt; {</b>
+<b class="nc">&nbsp;            String nuovoNome = nuovoNomeField.getValue().trim();</b>
+<b class="nc">&nbsp;            if (nuovoNome.isEmpty()) {</b>
+<b class="nc">&nbsp;                messageLabel.setText(&quot;Il nome non può essere vuoto&quot;);</b>
+&nbsp;                return;
+&nbsp;            }
+&nbsp;
+&nbsp;            // Aggiorna il nome nella coreografia
+&nbsp;            try {
+&nbsp;                // Salva la coreografia con il nuovo nome (notifica observer internamente)
+<b class="nc">&nbsp;                coreografiaController.rinominaCoreografia(coreografia.getId(), nuovoNome);</b>
+&nbsp;
+&nbsp;                // Aggiorna la griglia in HomeView
+<b class="nc">&nbsp;                aggiornaElencoCoreografie();</b>
+&nbsp;
+<b class="nc">&nbsp;                Notification.show(&quot;Nome coreografia aggiornato&quot;);</b>
+&nbsp;                dialog.close();
+&nbsp;
+&nbsp;            } catch (IOException e) {
+<b class="nc">&nbsp;                Notification.show(&quot;Errore aggiornamento coreografia: &quot; + e.getMessage());</b>
+&nbsp;            }
+&nbsp;        });
+<b class="fc">&nbsp;        salvaBtn.addClassName(&quot;secondary-button&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        Button annullaBtn = new Button(&quot;Annulla&quot;, e -&gt; dialog.close());</b>
+<b class="fc">&nbsp;        annullaBtn.addClassName(&quot;secondary-button&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        HorizontalLayout buttons = new HorizontalLayout(salvaBtn, annullaBtn);</b>
+<b class="fc">&nbsp;        dialog.add(nuovoNomeField, messageLabel, buttons);</b>
+<b class="fc">&nbsp;        dialog.open();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    protected void apriDialogCondivisione(Coreografia coreografia) {
+<b class="fc">&nbsp;        Dialog dialog = new Dialog();</b>
+&nbsp;
+<b class="fc">&nbsp;        TextField usernameField = new TextField(&quot;Username del coreografo&quot;);</b>
+<b class="fc">&nbsp;        usernameField.setWidthFull();</b>
+&nbsp;
+&nbsp;        //messaggi
+<b class="fc">&nbsp;        Span messageLabel = new Span();</b>
+&nbsp;
+<b class="fc">&nbsp;        Button condividiBtn = new Button(&quot;Condividi&quot;, event -&gt; {</b>
+<b class="nc">&nbsp;            String username = usernameField.getValue().trim();</b>
+&nbsp;
+<b class="nc">&nbsp;            if (username.isEmpty()) {</b>
+<b class="nc">&nbsp;                messageLabel.setText(&quot;Inserisci uno username valido&quot;);</b>
+&nbsp;                return;
+&nbsp;            }
+&nbsp;
+&nbsp;            try {
+&nbsp;                // Chiamata al controller che aggiunge l&#39;osservatore
+<b class="nc">&nbsp;                coreografiaController.aggiungiOsservatore(coreografia.getId(), username);</b>
+<b class="nc">&nbsp;                Notification.show(&quot;Coreografia condivisa con &quot; + username);</b>
+&nbsp;                dialog.close();
+&nbsp;
+&nbsp;            } catch (IllegalArgumentException e) {
+<b class="nc">&nbsp;                Notification.show(&quot;Username non trovato&quot;);</b>
+&nbsp;            } catch (Exception e) {
+<b class="nc">&nbsp;                Notification.show(&quot;Errore nella condivisione: &quot; + e.getMessage());</b>
+&nbsp;            }
+&nbsp;        });
+<b class="fc">&nbsp;        condividiBtn.addClassName(&quot;secondary-button&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        Button annullaBtn = new Button(&quot;Annulla&quot;, e -&gt; dialog.close());</b>
+<b class="fc">&nbsp;        annullaBtn.addClassName(&quot;secondary-button&quot;);</b>
+<b class="fc">&nbsp;        HorizontalLayout buttons = new HorizontalLayout(condividiBtn, annullaBtn);</b>
+&nbsp;
+<b class="fc">&nbsp;        dialog.add(usernameField, messageLabel, buttons);</b>
+<b class="fc">&nbsp;        dialog.open();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    protected void mostraNotifiche(VerticalLayout layout) throws IOException {
+<b class="fc">&nbsp;        layout.removeAll(); // Pulisci il contenuto precedente</b>
+<b class="fc">&nbsp;        Long coreografoId = (Long) UI.getCurrent().getSession().getAttribute(&quot;coreografoId&quot;);</b>
+<b class="fc">&nbsp;        List&lt;Notifica&gt; notifiche = coreografiaController.recuperaNotifiche(coreografoId);</b>
+&nbsp;
+<b class="fc">&nbsp;        if (notifiche.isEmpty()) {</b>
+<b class="fc">&nbsp;            layout.add(new Span(&quot;Nessuna nuova notifica&quot;));</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            for (Notifica notifica : notifiche) {</b>
+<b class="fc">&nbsp;                Span msg = new Span(&quot;⚠️&quot;+notifica.getMessaggio());</b>
+<b class="fc">&nbsp;                msg.setWidthFull();</b>
+<b class="fc">&nbsp;                layout.add(msg);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public Grid&lt;Coreografia&gt; getCoreografiaGrid() {
+<b class="fc">&nbsp;        return coreografiaGrid;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-09-07 11:00</div>
+</div>
+</body>
+</html>
