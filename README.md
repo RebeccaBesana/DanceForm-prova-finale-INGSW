@@ -2,7 +2,7 @@
 
 **Autore:** Rebecca Besana
 
-Questo repository contiene il progetto **DanceForm**, un'applicazione web sviluppata in **Java** utilizzando IntelliJ IDEA come ambiente di sviluppo. 
+Questo repository contiene il progetto **DanceForm**, un'applicazione web sviluppata in **Java** utilizzando **IntelliJ IDEA** come ambiente di sviluppo. 
 
 ## Struttura del progetto
 La cartella del progetto contiene tutto il **codice sorgente** dell'applicazione, inclusi i file Java e le configurazioni necessarie per eseguire il progetto.
