@@ -2,7 +2,8 @@
 # Rebecca Besana 
 
 Questo repository contiene il progetto DanceForm, un'applicazione web sviluppata in Java.
-La cartella contenente tutto il codice sorgente dell’applicazione.  
+
+La cartella contiene tutto il codice sorgente dell’applicazione.  
 Per eseguire l’applicazione web, avviare il seguente file:
 danceform/src/main/java/com/example/danceForm/DanceFormApplication.java
 
