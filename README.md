@@ -17,7 +17,7 @@ danceform/report/index.html
 ---
 ## Download del software (JAR eseguibile)
 - Scarica la versione pronta all’uso dalla pagina Releases:  
-  [DanceForm v1.0.0 – JAR eseguibile](https://github.com/<org>/<repo>/releases/tag/v1.0.0)
+  [DanceForm v1.0.0 – JAR eseguibile](sha256:a332c360bff5e0880bd1b938d596cbdb60cb170971641e31a7e51bbd607970c9)
 
 ### Requisiti
 - Java 17+
