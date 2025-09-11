@@ -16,7 +16,7 @@ Il progetto segue architettura **client/server** con pattern **MVC** e include *
 
 ### Esecuzione JAR
 ```bash
-java -jar danceform-1.0.0.jar
+java -jar danceform-1.0.0.jar```
 
 ---
 ## Struttura del progetto
