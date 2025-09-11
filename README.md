@@ -25,4 +25,4 @@ Scarica la versione pronta all’uso dalla pagina Releases:
 
 ### Esecuzione JAR
 ```bash
-java -jar danceForm-0.0.1-SNAPSHOT.jar
+java -jar danceform-0.0.1-SNAPSHOT.jar
