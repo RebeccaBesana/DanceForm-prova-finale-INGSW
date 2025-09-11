@@ -11,8 +11,7 @@ La cartella del progetto contiene tutto il codice sorgente dell'applicazione.
 
 ## Report
 In aggiunta al codice sorgente, è presente una cartella report che contiene il report dei test generato da IntelliJ IDEA in formato HTML: 
-
-danceform/report/index.html
+[Report di test](https://github.com/RebeccaBesana/DanceForm-prova-finale-INGSW/report)
 
 ---
 ## Download del software (JAR eseguibile)
