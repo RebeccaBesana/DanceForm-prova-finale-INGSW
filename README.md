@@ -17,12 +17,11 @@ danceform/report/index.html
 ---
 ## Download del software (JAR eseguibile)
 - Scarica la versione pronta all’uso dalla pagina Releases:  
-  [DanceForm v1.0.0 – JAR eseguibile](sha256:a332c360bff5e0880bd1b938d596cbdb60cb170971641e31a7e51bbd607970c9)
+  [DanceForm v1.0.0 – JAR eseguibile](https://github.com/RebeccaBesana/DanceForm-prova-finale-INGSW/releases/tag/v1.0.0)
 
 ### Requisiti
 - Java 17+
-- (Opzionale) Maven 3.9+ se vuoi eseguire dal sorgente
 
 ### Esecuzione JAR
 ```bash
-java -jar danceform-1.0.0.jar
+java -jar danceForm-0.0.1-SNAPSHOT.jar
