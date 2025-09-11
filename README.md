@@ -11,12 +11,14 @@ La cartella del progetto contiene tutto il codice sorgente dell'applicazione.
 
 ## Report
 In aggiunta al codice sorgente, è presente una cartella report che contiene il report dei test generato da IntelliJ IDEA in formato HTML: 
-[Report di test](https://github.com/RebeccaBesana/DanceForm-prova-finale-INGSW/report)
+
+[Report di test](https://github.com/RebeccaBesana/DanceForm-prova-finale-INGSW/tree/main/danceForm/report)
 
 ---
 ## Download del software (JAR eseguibile)
-- Scarica la versione pronta all’uso dalla pagina Releases:  
-  [DanceForm v1.0.0 – JAR eseguibile](https://github.com/RebeccaBesana/DanceForm-prova-finale-INGSW/releases/tag/v1.0.0)
+Scarica la versione pronta all’uso dalla pagina Releases:
+
+[DanceForm v1.0.0 – JAR eseguibile](https://github.com/RebeccaBesana/DanceForm-prova-finale-INGSW/releases/tag/v1.0.0)
 
 ### Requisiti
 - Java 17+
